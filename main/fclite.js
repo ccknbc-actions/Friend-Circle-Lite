@@ -60,7 +60,7 @@ function initialize_fc_lite() {
         const stats = data.statistical_data;
         statsContainer.innerHTML = `
             <div>Powered by: <a href="https://github.com/willow-god/Friend-Circle-Lite" target="_blank">FriendCircleLite</a><br></div>
-            <div>Designed By: <a href="https://www.qyliu.top/" target="_blank">LiuShen</a><br></div>
+            <div>Designed By: <a href="https://www.liushen.fun/" target="_blank">LiuShen</a><br></div>
             <div>订阅:${stats.friends_num}   活跃:${stats.active_num}   总文章数:${stats.article_num}<br></div>
             <div>更新时间:${stats.last_updated_time}</div>
         `;
@@ -125,7 +125,7 @@ function initialize_fc_lite() {
 
     function showAuthorArticles(author, avatar, link) {
         // 如果不存在，则创建模态框结构
-        if (!document.getElementById('modal')) {
+        if (!document.getElementById('fclite-modal')) {
             const modal = document.createElement('div');
             modal.id = 'modal';
             modal.className = 'modal';
@@ -134,19 +134,23 @@ function initialize_fc_lite() {
                 <img id="modal-author-avatar" src="" alt="">
                 <a id="modal-author-name-link"></a>
                 <div id="modal-articles-container"></div>
+                <img id="modal-bg" src="" alt="">
             </div>
             `;
-            document.body.appendChild(modal);
+            root.appendChild(modal);
         }
 
         const modal = document.getElementById('modal');
         const modalArticlesContainer = document.getElementById('modal-articles-container');
         const modalAuthorAvatar = document.getElementById('modal-author-avatar');
         const modalAuthorNameLink = document.getElementById('modal-author-name-link');
+        const modalBg = document.getElementById('modal-bg');
 
         modalArticlesContainer.innerHTML = ''; // 清空之前的内容
         modalAuthorAvatar.src = avatar  || UserConfig.error_img; // 使用默认头像
         modalAuthorAvatar.onerror = () => modalAuthorAvatar.src = UserConfig.error_img; // 头像加载失败时使用默认头像
+        modalBg.src = avatar || UserConfig.error_img; // 使用默认头像
+        modalBg.onerror = () => modalBg.src = UserConfig.error_img; // 头像加载失败时使用默认头像
         modalAuthorNameLink.innerText = author;
         modalAuthorNameLink.href = new URL(link).origin;
 
@@ -184,7 +188,7 @@ function initialize_fc_lite() {
         modal.classList.remove('modal-open');
         modal.addEventListener('transitionend', () => {
             modal.style.display = 'none';
-            document.body.removeChild(modal);
+            root.removeChild(modal);
         }, { once: true });
     }
 

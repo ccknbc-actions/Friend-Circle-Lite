@@ -15,3 +15,5 @@
 # 忽略数据文件
 ./all.json
 ./errors.json
+
+*.bat
